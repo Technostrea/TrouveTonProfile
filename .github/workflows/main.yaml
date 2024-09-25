@@ -1,0 +1,16 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - dev
+      - feat/*
+      - fix/*
+
+jobs:
+  run-tests:
+    uses: ./tests/docker-build.yaml

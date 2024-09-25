@@ -2,12 +2,7 @@ name: Docker Build Check
 
 # Déclencheur pour chaque pull request
 on:
-  pull_request:
-    branches:
-      - main
-      - dev
-      - feat/*
-      - fix/*
+  workflow_call:
 
 jobs:
   build:

@@ -1,0 +1,18 @@
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Minimum 100% de la hauteur de la fenêtre */
+}
+
+#content {
+  flex-grow: 1; /* Cette zone grandit pour remplir l'espace restant */
+  padding: 20px;
+}
+
+app-nav-bar {
+  flex-shrink: 0; /* Le header ne doit pas rétrécir */
+}
+
+app-footer {
+  flex-shrink: 0; /* Le footer ne doit pas rétrécir */
+}

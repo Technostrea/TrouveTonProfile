@@ -1,0 +1,67 @@
+name: Docker Build Check
+
+# Déclencheur pour chaque pull request
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+      - feat/*
+      - fix/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout du code source du dépôt
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Configuration de QEMU pour le support multi-plateformes
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      # 3. Configuration de Docker Buildx pour la construction multi-arch
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64
+
+      # 4. Test de la construction du Dockerfile pour les architectures amd64 et arm64
+      - name: Build local container
+        uses: docker/build-push-action@v4
+        with:
+          tags: lastrea/trouvetonprofile:latest
+          push: false
+          platforms: linux/arm64
+          load: true
+
+      # 5. Vérification de la taille de l'image construite
+      - name: Check image size
+        run: docker images lastrea/trouvetonprofile:latest --format "{{.Size}}"
+
+      # 6. Scan de l'image Docker pour détecter les vulnérabilités
+      - name: Scan Image
+        uses: anchore/scan-action@v3
+        id: scan
+        with:
+          image: "lastrea/trouvetonprofile:latest"
+          fail-build: true
+          severity-cutoff: critical
+          output-format: sarif
+
+      - name: Upload Anchore Scan SARIF Report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+
+      # 7. Vérification si la construction et le scan ont réussi
+      - name: Build and Scan verification
+        if: ${{ success() }}
+        run: echo "Dockerfile built and scanned successfully!"
+
+      # 8. Envoi d'un message d'échec en cas d'erreur lors de la construction ou du scan
+      - name: Notify on failure
+        if: ${{ failure() }}
+        run: echo "The Dockerfile build or scan failed! Please review the changes."

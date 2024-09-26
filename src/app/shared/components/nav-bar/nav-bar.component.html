@@ -1,4 +1,4 @@
-<header class="w-screen bg-white dark:bg-gray-900">
+<header class="w-screen bg-white dark:bg-gray-900 min-h-12">
   <div class="w-full">
     <nav
       class="fixed w-full z-20 top-0 start-1/2 max-w-6xl -translate-x-1/2 bg-white dark:bg-gray-900">
@@ -42,8 +42,7 @@
             </button>
           }
           <span class="text-black dark:text-white"> | </span>
-          <button
-            type="button"
+          <a [routerLink]="['/auth']"
             class="text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2 text-center flex items-center justify-center gap-1">
                 <span class="inline-block h-4 w-4">
                   <svg
@@ -55,7 +54,7 @@
                   </svg>
                 </span>
             <span class="hidden sm:block text-black dark:text-white">Se connecter</span>
-          </button>
+          </a>
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"

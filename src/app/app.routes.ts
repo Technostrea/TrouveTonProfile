@@ -17,6 +17,16 @@ export const routes: Routes = [
     loadChildren: () => import('@app/routes/profile/profile.module').then(m => m.ProfileModule)
   },
   {
+    path:'auth',
+    title: 'Authentification',
+    loadChildren: () => import('@app/routes/authentification/authentification.module').then(m => m.AuthentificationModule)
+  },
+  {
+    path: 'my-profile',
+    title: 'Mon profile',
+    loadChildren: () => import('@app/routes/my-profile/my-profile.module').then(m => m.MyProfileModule)
+  },
+  {
     path: 'not-found',
     title: 'Page non trouvée',
     loadChildren: () => import('@app/routes/not-found/not-found.module').then(m => m.NotFoundModule)

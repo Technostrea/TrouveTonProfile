@@ -13,4 +13,4 @@ on:
 
 jobs:
   run-tests:
-    uses: ./.github/workflows/tests/docker-build.yaml
+    uses: .github/workflows/tests/docker-build.yaml

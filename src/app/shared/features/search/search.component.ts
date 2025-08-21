@@ -20,9 +20,6 @@ export class SearchComponent {
   });
 
   onSubmit(){
-    if (this.searchForm.invalid) {
-      return;
-    }
     const search = this.searchForm.value.search?.toLowerCase()!;
     this.setNewName(search);
   }

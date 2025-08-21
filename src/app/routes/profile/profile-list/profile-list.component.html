@@ -1,27 +1,25 @@
 <section class="pb-10 relative">
-  <div class="relative overflow-hidden">
-
-    <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10">
-      <div class="mt-8 mx-auto max-w-3xl space-y-2">
-        <app-search/>
-      </div>
+  <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10 flex sm:flex-row flex-col space-y-2 items-center sm:space-x-4 ">
+    <div class="flex-1">
+      <app-search/>
     </div>
-
+    <div class="">
+      <app-display-profile-card (onDisplayChange)="showNewDisplay($event)"/>
+    </div>
   </div>
 
 
   <div class="max-w-6xl mx-auto px-4">
-    <app-display-profile-card (onDisplayChange)="showNewDisplay($event)"/>
 
-    @switch (display()){
-      @case ('list'.toUpperCase()){
-        <app-horizental-profile-list/>
+    @switch (display()) {
+      @case ('list'.toUpperCase()) {
+        <app-horizental-profile-list [profiles]="profiles"/>
       }
-      @case ('grid'.toUpperCase()){
-        <app-vertical-profile-list/>
+      @case ('grid'.toUpperCase()) {
+        <app-vertical-profile-list [profiles]="profiles"/>
       }
-      @default{
-        <app-vertical-profile-list/>
+      @default {
+        <app-vertical-profile-list [profiles]="profiles"/>
       }
     }
 

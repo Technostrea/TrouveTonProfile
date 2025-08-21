@@ -1,0 +1,10 @@
+@if (sector != undefined) {
+  <div class="flex flex-wrap space-x-2 items-center space-y-1">
+    @for (chip of sector.nom.split('-'); track chip) {
+      <small
+        class="rounded-full bg-indigo-400 hover:bg-indigo-700 text-xs text-white py-1.5 px-3 font-semibold ">{{ chip | titlecase }}</small>
+    }
+  </div>
+}
+
+

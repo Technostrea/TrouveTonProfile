@@ -1,0 +1,35 @@
+<div class="min-h-screen py-4 font-sans">
+  <div class="max-w-4xl max-lg:max-w-2xl max-sm:max-w-sm mx-auto">
+    <h2 class="text-2xl font-bold text-gray-800 mb-8">Mes projets</h2>
+
+    @if (projects) {
+      <div class="relative flex items-center">
+        <select [(ngModel)]="projectIdSelected"
+                class="pr-4 pl-14 py-3 text-sm text-black rounded bg-white border border-gray-400 w-full outline-[#333]">
+          <option [value]="null" disabled>Selectionner le projet à modifier</option>
+
+          <option [value]="'add'.toLowerCase()">
+            Ajouter un nouveau projet
+          </option>
+
+          @for (project of projects; track project.id) {
+            <option [value]="project.id">
+              {{ project.nom }}
+            </option>
+          }
+
+        </select>
+
+      </div>
+
+    }
+
+
+    <div class="w-full my-8">
+      @if (projectIdSelected() != null) {
+        <app-my-profile-update-project-form [projectId]="projectIdSelected()"
+                                            (formIsUpdated)="onProjectFormSubmitted($event)"/>
+      }
+    </div>
+  </div>
+</div>

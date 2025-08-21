@@ -1,4 +1,4 @@
-<form class="w-full relative" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+<form class="w-full" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
   <div class="flex w-full border rounded-full p-2 items-center">
     <div class="flex-1 flex flex-row items-center">
       <button class="inline-block w-8 h-8 p-1 text-gray-400">
@@ -27,9 +27,16 @@
         aria-controls="typeahead_results"
         aria-autocomplete="list" />
     </div>
-    <button
-      class="w-32 h-12 rounded-full bg-purple-800 hover:bg-purple-900 text-gray-50">
-      Trouver
-    </button>
+    @if (searchForm.invalid){
+      <button
+        class="w-32 h-12 text-xs rounded-full bg-purple-800 hover:bg-purple-900 text-gray-50">
+        Voir tout
+      </button>
+    } @else {
+      <button
+        class="w-32 h-12 text-xs rounded-full bg-purple-800 hover:bg-purple-900 text-gray-50">
+        Rechercher
+      </button>
+    }
   </div>
 </form>

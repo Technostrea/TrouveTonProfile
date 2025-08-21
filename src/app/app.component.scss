@@ -7,6 +7,9 @@ main {
 .content {
   flex: 1; /* Cette zone grandit pour remplir l'espace restant */
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 app-nav-bar {

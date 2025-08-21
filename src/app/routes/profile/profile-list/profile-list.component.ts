@@ -15,6 +15,8 @@ import {
 import {
   VerticalProfileListComponent
 } from "@app/shared/components/vertical-profile-list/vertical-profile-list.component";
+import {UntilDestroy} from "@ngneat/until-destroy";
+import {Profile} from "@app/shared/models/profile";
 
 @Component({
   selector: 'app-profile-list',
@@ -31,15 +33,12 @@ import {
   templateUrl: './profile-list.component.html',
   styleUrl: './profile-list.component.scss'
 })
+@UntilDestroy()
 export class ProfileListComponent {
 
   private readonly route = inject(ActivatedRoute);
-  protected profiles = this.route.snapshot.data['profiles'];
+  protected profiles : Profile[] = this.route.snapshot.data['profiles'] as Profile[];
   protected display = signal<string>('grid'.toUpperCase());
-
-  constructor() {
-    console.log(this.profiles)
-  }
 
   showNewDisplay($event: string) {
     this.display.set($event.toUpperCase())

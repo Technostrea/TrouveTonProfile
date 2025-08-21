@@ -11,6 +11,25 @@
           </div>
         </a>
         <div class="flex md:order-2 space-x-1 items-center">
+
+          @if (authService.isAuthenticated() && authService.isEmailVerified()) {
+
+            @if (authService.user()!.record!; as user) {
+              <a [routerLink]="['my-profile']" [state]="{user}" class="w-10 h-10 dark:border-white dark:border rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400">
+                @if (user.avatar) {
+                  <img alt="{{user.username}}" class="object-cover object-center h-full w-full rounded-full"
+                       src="{{environment.baseUrl}}/api/files/users/{{user.id}}/{{user.avatar}}" loading="lazy">
+
+                } @else {
+                  <img alt="{{user.username}}" class="object-cover object-center h-full w-full rounded-full"
+                       src="https://api.dicebear.com/9.x/adventurer/svg?seed={{user.username}}" loading="lazy">
+                }
+              </a>
+
+            }
+
+          }
+
           @if (themeService.darkModeSignal() === 'dark') {
             <button
               type="button"
@@ -19,7 +38,8 @@
                 <span class="inline-block h-4 w-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                        stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
 
                   </svg>
 
@@ -42,42 +62,82 @@
             </button>
           }
           <span class="text-black dark:text-white"> | </span>
-          <a [routerLink]="['/auth']"
-            class="text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2 text-center flex items-center justify-center gap-1">
-                <span class="inline-block h-4 w-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-full h-full fill-current"
-                    viewBox="0 -960 960 960">
-                    <path
-                      d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/>
+
+
+          @if (authService.user()?.isValid) {
+            <a [routerLink]="['/auth']" (click)="authService.logout(); authService.updateUser();"
+               class="text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2 text-center flex items-center justify-center space-x-4">
+              <span class="h-4 w-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                       stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"/>
                   </svg>
+
                 </span>
-            <span class="hidden sm:block text-black dark:text-white">Se connecter</span>
-          </a>
-          <button
+              <span class="hidden sm:block text-black text-center dark:text-white">Se deconnecter</span>
+            </a>
+          } @else {
+            <a [routerLink]="['/auth']"
+               class="text-black dark:text-white font-medium rounded-lg text-sm px-4 py-2 text-center flex items-center justify-center gap-1">
+              <span class="inline-block h-4 w-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-full h-full fill-current"
+                      viewBox="0 -960 960 960">
+                      <path
+                        d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/>
+                    </svg>
+                  </span>
+              <span class="hidden sm:block text-black dark:text-white">Se connecter</span>
+            </a>
+          }
+
+          <!--<button
             data-collapse-toggle="navbar-sticky"
+            (click)="onOpenMenu()"
             type="button"
             class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="navbar-sticky"
             aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg
-              class="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14">
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 1h15M1 7h15M1 13h15"/>
-            </svg>
-          </button>
+            @if (isMenuOpen) {
+
+              <span class="sr-only">Close main menu</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 dark:text-white">
+                <path fill-rule="evenodd"
+                      d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+                      clip-rule="evenodd"/>
+              </svg>
+
+            } @else {
+              <span class="sr-only">Open main menu</span>
+              <svg
+                class="w-5 h-5  dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 17 14">
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 1h15M1 7h15M1 13h15"/>
+              </svg>
+            }
+          </button>-->
         </div>
       </div>
+      <!--      @if (isMenuOpen) {
+              <div class="w-full flex justify-end px-2">
+                <a [routerLink]="['my-profile']" class="flex w-max items-center space-x-2 border px-2 py-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 dark:text-white">
+                    <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="dark:text-white">Mon profil</span>
+                </a>
+              </div>
+            }-->
     </nav>
   </div>
 </header>

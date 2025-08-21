@@ -1,0 +1,31 @@
+<div class="flex w-full justify-between items-center mb-6">
+  <span (click)="isCancelEditMode.emit(true)"
+        class="cursor-pointer px-3 py-3 text-white bg-purple-600 w-max flex space-x-2 items-center rounded-full justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+  <path fill-rule="evenodd"
+        d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
+        clip-rule="evenodd"/>
+</svg>
+
+    <small>Terminer</small>
+  </span>
+
+  <span (click)="isCancelEditMode.emit(true)"
+        class="cursor-pointer px-3 py-3 text-white bg-red-600 w-max flex space-x-2 items-center rounded-full justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+        <path fill-rule="evenodd"
+              d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm2.78-4.22a.75.75 0 0 1-1.06 0L8 9.06l-1.72 1.72a.75.75 0 1 1-1.06-1.06L6.94 8 5.22 6.28a.75.75 0 0 1 1.06-1.06L8 6.94l1.72-1.72a.75.75 0 1 1 1.06 1.06L9.06 8l1.72 1.72a.75.75 0 0 1 0 1.06Z"
+              clip-rule="evenodd"/>
+      </svg>
+
+    <small>Annuler</small>
+  </span>
+</div>
+
+@if (user != undefined) {
+  <div class="w-full flex flex-col space-y-4 ">
+    <app-user-avatar-form [user]="user"/>
+    <app-user-form [user]="user"/>
+  </div>
+}
+

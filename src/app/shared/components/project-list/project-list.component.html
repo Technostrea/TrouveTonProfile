@@ -1,0 +1,14 @@
+<div class="min-h-screen py-4 font-sans">
+  <div class="max-w-4xl max-lg:max-w-2xl max-sm:max-w-sm mx-auto">
+    <h2 class="text-2xl font-bold text-gray-800 mb-8">Explorer les projets</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      @for (project of projects; track project) {
+        <app-project-item [project]="project"/>
+      } @empty {
+        <p>Aucun projet</p>
+      }
+
+    </div>
+  </div>
+</div>

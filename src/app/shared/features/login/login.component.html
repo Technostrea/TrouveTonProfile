@@ -1,6 +1,6 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-full space-y-4">
-  <div class="">
-    <div class="relative">
+    <div class="">
+      <div class="relative">
       <span class="absolute block w-3 h-3 -translate-y-1/2 top-1/2 left-1">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current" viewBox="0 0 512 512">
           <path
@@ -8,13 +8,13 @@
         </svg>
       </span>
 
-      <input formControlName="email" placeholder="email" type="email" id="email" name="email" class="w-full h-10 px-5 py-2 text-xs bg-transparent border rounded-md"/>
+        <input formControlName="email" placeholder="email" type="email" id="email" name="email" class="w-full h-10 px-5 py-2 text-xs bg-transparent border rounded-md"/>
+      </div>
     </div>
-  </div>
 
-  <div class="">
-    <div class="text-right">
-      <div class="relative">
+    <div class="">
+      <div class="text-right">
+        <div class="relative">
         <span class="absolute block w-3 h-3 -translate-y-1/2 top-1/2 left-1">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current" viewBox="0 0 448 512">
             <path
@@ -22,35 +22,39 @@
           </svg>
         </span>
 
-        <input formControlName="password" placeholder="mot de passe" type="password" id="password" name="" class="w-full h-10 px-5 py-2 text-xs bg-transparent border rounded-md"/>
-        <button class="absolute w-4 h-4 -translate-y-1/2 right-1 top-1/2 togglePasswordVisibility">
+          <input #pwdInput formControlName="password" autocomplete="on"  placeholder="mot de passe" type="password" id="password" name="" class="w-full h-10 px-5 py-2 text-xs bg-transparent border rounded-md"/>
+          <button class="absolute w-4 h-4 -translate-y-1/2 right-1 top-1/2 togglePasswordVisibility" type="button" (click)="pwdInput.type = pwdInput.type === 'password' ? 'text' : 'password'">
           <span class="inline-block w-4 h-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current" viewBox="0 -960 960 960">
-              <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/>
-            </svg>
+            @if ( pwdInput.type === 'password' ){
+              <svg xmlns="http://www.w3.org/2000/svg"  class="w-full h-full fill-current" viewBox="0 0 21 21">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M2 10.5Q5.805 16 10.5 16t8.5-5.5M4.5 13.423l-2 2.077m14-2.077l2 2.077m-6 .5l1 2.5m-5-2.5l-1 2.5"/>
+              </svg>
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current" viewBox="0 -960 960 960">
+                <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/>
+              </svg>
+            }
           </span>
-        </button>
+          </button>
+        </div>
+        <a [routerLink]="['']" class="text-xs">Mot de passe oublié?</a>
       </div>
-      <a [routerLink]="['']" class="text-xs">Mot de passe oublié?</a>
     </div>
-  </div>
 
-  <div class="relative">
-    <button class="text-xs py-2 px-4 border bg-[#002B2F] w-1/2 text-center text-gray-50 rounded-md">
-      Se connecter
-    </button>
-  </div>
-  <div class="relative">
-    <div class="flex items-center">
-      <input checked id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded"/>
-      <label for="checked-checkbox" class="text-sm font-medium ms-2">
-        Se souvenir de moi
-      </label>
+    <div class="relative">
+      <button class="text-xs py-2 px-4 border bg-[#002B2F] w-1/2 text-center text-gray-50 rounded-md">
+        Se connecter
+      </button>
     </div>
-  </div>
-  <div class="">
-    <p class="text-xs font-light text-center"> Vous n'avez pas de compte?
-      <a [routerLink]="['register']" class="font-bold">Créez-en ici</a>
-    </p>
-  </div>
-</form>
+    <div class="">
+      <p class="text-xs font-light text-center"> Vous n'avez pas de compte?
+        <a [routerLink]="['register']" class="font-bold">Créez-en ici</a>
+      </p>
+    </div>
+  </form>
+
+  @if (isLoading()) {
+    <ng-container>
+      <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" />
+    </ng-container>
+  }
